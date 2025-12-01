@@ -21,20 +21,21 @@ function loadDonors() {
     let lines = data.split("\n");
 
     lines.forEach(line => {
-        let parts = line.split(" ");
+        if (!line.trim()) return;
 
-        if (parts.length < 6) return; // skip bad rows
+        // split by ANY spaces
+        let parts = line.trim().split(/\s+/);
+
+        // Your format = exactly 5 parts
+        if (parts.length < 5) return;
 
         let id = parseInt(parts[0]);
-        let nameAge = parts[1].split("|");
 
-        if (nameAge.length < 2) return;
+        const [name, age] = parts[1].split("|");
 
-        let name = nameAge[0];
-        let age = nameAge[1];
-        let gender = parts[2];
-        let bloodGroup = parts[3];
-        let contact = parts[4];
+        const gender = parts[2];
+        const bloodGroup = parts[3];
+        const contact = parts[4];
 
         donors.push({
             id,
